@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # 🎬 Movie Ticket Booking System
 
 A dynamic web-based application for booking movie tickets across multiple cities and theatres. Built using **Flask**, **SQLite**, and **HTML/CSS**, this system enables users to select movies, pick seats in real-time, confirm bookings with OTP-based email verification, and receive e-tickets via email.
@@ -169,3 +170,6 @@ app.config['MAIL_USE_SSL'] = True
 - Complete payment and OTP verification
 
 - Receive booking confirmation via email
+=======
+# Movie-Ticket-Booking-System
+>>>>>>> dc9828b3ea51de8e9064c110031b8f20ad230d10
