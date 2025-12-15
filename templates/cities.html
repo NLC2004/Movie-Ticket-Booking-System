@@ -117,15 +117,27 @@
             <div> 
                 {% for i in li %} 
                 <div class="wrapper" ondblclick="submitCity('{{ i }}')"> 
-                    <label>{{ i }}</label> 
-                    {% if i == 'Chennai' %} 
-                        <img src="/static/images/ch.jpg" style="height: 200px;width: 300px;" alt="Chennai" class="city-card"> 
+                    <label>
+                        {% if i == 'Beijing' %}
+                            Beijing
+                        {% elif i == 'Hongkong' %}
+                            Hongkong
+                        {% elif i == 'Tokyo' %}
+                            Tokyo
+                        {% else %}
+                            {{ i }}
+                        {% endif %}
+                    </label> 
+                    {% if i == 'Beijing' %} 
+                        <img src="/static/images/bj.jpg" style="height: 200px;width: 300px;" alt="Beijing" class="city-card"> 
                     {% elif i == 'Mumbai' %} 
                         <img src="/static/images/mum.jpg" style="height: 200px;width: 300px;" alt="Mumbai" class="city-card"> 
                     {% elif i == 'Bangalore' %}  
                         <img src="/static/images/bang.jpg" style="height: 200px;width: 300px;" alt="Bangalore" class="city-card"> 
-                    {% elif i == 'Delhi' %}  
-                        <img src="/static/images/del.cms" style="height: 200px;width: 300px;" alt="Delhi" class="city-card"> 
+                    {% elif i == 'Tokyo' %}  
+                        <img src="/static/images/tk.jpg" style="height: 200px;width: 300px;" alt="Tokyo" class="city-card"> 
+                    {% elif i == 'Hongkong' %}  
+                        <img src="/static/images/hk.jpg" style="height: 200px;width: 300px;" alt="Hongkong" class="city-card"> 
                     {% else %} 
                         <p>Image not attached</p> 
                     {% endif %} 

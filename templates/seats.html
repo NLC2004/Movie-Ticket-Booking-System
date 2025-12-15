@@ -112,7 +112,7 @@
         <div class="center-text">Seat Selection</div>
     </div>
     <br><br><br>
-    <form method="POST" action="/booked"> 
+    <form method="POST" action="/booked" id="seatsForm"> 
     <div style="position: absolute; left: 120px; font-family: 'Lato', sans-serif;"> 
         {% for y in range (1,25) %} 
             {% set x = 'A'~ y|string %} 
@@ -178,8 +178,33 @@
         <br> 
         Rows H-J :&#8377;120 
     </h2> 
-    <button type="submit">Book now</button> 
+    <button type="submit" id="bookBtn">Book now</button> 
     </div> 
     </form> 
+
+    <script>
+        (function() {
+            const requiredCount = {{ seat|default(0) }};
+            const form = document.getElementById('seatsForm');
+            const checkboxes = Array.from(document.querySelectorAll('input[type="checkbox"][name="seat_selected"]:not([disabled])'));
+            const selected = () => checkboxes.filter(cb => cb.checked).length;
+
+            checkboxes.forEach(cb => {
+                cb.addEventListener('change', () => {
+                    if (selected() > requiredCount) {
+                        cb.checked = false;
+                        alert('请按照正确的数量选择座位！');
+                    }
+                });
+            });
+
+            form.addEventListener('submit', (e) => {
+                if (selected() !== requiredCount) {
+                    e.preventDefault();
+                    alert('请按照正确的数量选择座位！');
+                }
+            });
+        })();
+    </script>
 </body> 
 </html> 

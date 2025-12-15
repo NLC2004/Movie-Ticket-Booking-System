@@ -147,8 +147,9 @@
         <h1><span style="color: rgb(213, 37, 37);">Ticket</span> Box</h1>
     </div>
     <div class="wrapper">
-        <form method="POST" action="/login">
-            <h1>Login</h1>
+        <form method="POST" action="/login?mode={{ mode }}">
+            <input type="hidden" name="mode" value="{{ mode }}">
+            <h1>{{ 'Admin Login' if mode == 'admin' else 'User Login' }}</h1>
 
             <div class="input-box">
                 <input type="text" name="username" placeholder="Username" required>

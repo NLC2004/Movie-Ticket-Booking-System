@@ -63,39 +63,63 @@
 
         .wrapper {
             display: inline-block;
-            height: 250px;
-            width: 336px;
-            background: rgba(0, 0, 0, 0.7);
+            width: 340px;
+            background: rgba(0, 0, 0, 0.78);
             color: white;
-            border-radius: 10px;
-            padding: 20px;
-            margin: 20px;
-            text-align: center;
+            border-radius: 14px;
+            padding: 18px;
+            margin: 18px;
+            text-align: left;
             cursor: pointer;
             transition: transform 0.2s, box-shadow 0.2s;
+            overflow: hidden;
         }
 
         .wrapper:hover {
-            transform: scale(1.05);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            transform: translateY(-4px);
+            box-shadow: 0 10px 24px rgba(0, 0, 0, 0.45);
         }
 
         .wrapper.selected {
-            border: 2px solid rgba(255, 255, 255, 0.686);
-            box-shadow: 0 0 10px rgba(255, 255, 255, 0.685);
+            border: 2px solid rgba(255, 255, 255, 0.8);
+            box-shadow: 0 0 14px rgba(255, 255, 255, 0.6);
         }
 
-        .wrapper label {
-            font-size: 24px;
-            display: block;
-            margin-bottom: 10px;
+        .movie-header {
+            display: flex;
+            gap: 12px;
+            align-items: center;
         }
 
         .movie-card img {
-            border: 2px solid black;
-            border-radius: 8px;
-            height: 150px;
-            width: 200px;
+            border-radius: 10px;
+            height: 140px;
+            width: 100px;
+            object-fit: cover;
+        }
+
+        .title {
+            font-size: 20px;
+            font-weight: 700;
+            margin: 0;
+        }
+
+        .rating {
+            margin-top: 6px;
+            font-size: 14px;
+            color: #ffc94a;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .summary {
+            margin-top: 10px;
+            font-size: 14px;
+            color: #e0e0e0;
+            line-height: 1.5;
+            max-height: 96px;
+            overflow: hidden;
         }
 
         #movie-submit {
@@ -126,36 +150,25 @@
             <input type="hidden" id="movie" name="movie" value="">
 
             {% for movie in mov %}
-            <div class="wrapper" onclick="selectMovie('{{ movie }}')">
-                <label>{{ movie }}</label>
-                {% if movie == 'Raayan' %}
-                    <img src="/static/images/poster3.jpg" style="height: 200px;width: 300px;"  alt="{{ movie }}" class="movie-card">
-                {% elif movie == 'Master' %}
-                    <img src="/static/images/poster1.jpg" style="height: 200px;width: 300px;" alt="{{ movie }}" class="movie-card">
-                {% elif movie == 'Soorarai Pottru' %}
-                    <img src="/static/images/poster2.jpg" style="height: 200px;width: 300px;" alt="{{ movie }}" class="movie-card">
-                {% elif movie == 'KGF' %}
-                    <img src="/static/images/poster4.jpg"  style="height: 200px;width: 300px;" alt="{{ movie }}" class="movie-card">
-                {% elif movie == 'KGF' %}
-                    <img src="/static/images/poster4.jpg"  style="height: 200px;width: 300px;" alt="{{ movie }}" class="movie-card">
-                {% elif movie == 'Premalu' %}
-                    <img src="/static/images/poster5.jpg"  style="height: 200px;width: 300px;" alt="{{ movie }}" class="movie-card">
-                {% elif movie == 'Aavesham' %}
-                    <img src="/static/images/poster6.jpg"  style="height: 200px;width: 300px;" alt="{{ movie }}" class="movie-card">
-                {% elif movie == 'Dangal' %}
-                    <img src="/static/images/poster7.jpg"  style="height: 200px;width: 300px;" alt="{{ movie }}" class="movie-card">
-                {% elif movie == '3 Idiots' %}
-                    <img src="/static/images/poster8.jpg"  style="height: 200px;width: 300px;" alt="{{ movie }}" class="movie-card">
-                {% elif movie == 'Ae Dil Hai Mushkil' %}
-                    <img src="/static/images/poster9.jpg"  style="height: 200px;width: 300px;" alt="{{ movie }}" class="movie-card">
-                {% elif movie == 'Gully Boy' %}
-                    <img src="/static/images/poster10.jpg"  style="height: 200px;width: 300px;" alt="{{ movie }}" class="movie-card">
-                {% elif movie == 'Chhichhore' %}
-                    <img src="/static/images/poster11.jpg"  style="height: 200px;width: 300px;" alt="{{ movie }}" class="movie-card">
-                {% elif movie == 'Kabir Singh' %}
-                    <img src="/static/images/poster12.jpg"  style="height: 200px;width: 300px;" alt="{{ movie }}" class="movie-card">
-                {% else %}
-                    <p>Image not attached</p>
+            <div class="wrapper" onclick="selectMovie('{{ movie.title }}')">
+                <div class="movie-header">
+                    <div class="movie-card">
+                        {% if movie.poster_path %}
+                            <img src="/{{ movie.poster_path }}" alt="{{ movie.title }}">
+                        {% else %}
+                            <img src="/static/images/poster8.jpg" alt="{{ movie.title }}">
+                        {% endif %}
+                    </div>
+                    <div>
+                        <p class="title">{{ movie.title }}</p>
+                        <div class="rating">
+                            <span>★</span>
+                            <span>{{ movie.rating if movie.rating is not none else 'N/A' }}</span>
+                        </div>
+                    </div>
+                </div>
+                {% if movie.summary %}
+                <p class="summary">{{ movie.summary }}</p>
                 {% endif %}
             </div>
             {% endfor %}
@@ -168,7 +181,9 @@
         function selectMovie(movie) {
             document.getElementById('movie').value = movie;
             document.querySelectorAll('.wrapper').forEach(card => card.classList.remove('selected'));
-            event.currentTarget.classList.add('selected');
+            if (event && event.currentTarget) {
+                event.currentTarget.classList.add('selected');
+            }
         }
     </script>
 </body>
